@@ -1,4 +1,4 @@
-# Secure-Pass ( User provided database file name)
+# Password-Manager ( User provided database file name)
 The project is for learning and is under development.
 This will include codes related with storing usernames and passwords in a secure way.
 The password is hashed by using a passphrase which the user has to remember and user can use the same passphrase to retrieve the password.
