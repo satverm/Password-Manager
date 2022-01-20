@@ -1,0 +1,29 @@
+#InfoBrw:This Document contains the To Do List for the project Secure-Pass 
+* To Do List for the Secure-Pass project
+
+* ToDo
+* TODO Improve Readme.md
+* TODO Add code to check data validity for inputs by the user.
+* TODO Create a user for the program. The ID and password in the first row in the database  can be used to login a user for managing the database. This will be used in UI to  create a login manager. This will become the opening dialog box for gui.
+* TODO convert the code to use the main() function to run
+* TODO Add the option to hash any password and get the hash code to store first few characters of the hash. These characters can then be used later to verify the passwords offline without the need to login in the actual servie or to check if any password is matching with the hashes. This option does not store anything in the database and the user has to write or store first few hash characters somewhere for verifying later.
+ 
+Basic Functions:
+
+ 1. Add the code for the passwords and the passphrase to be meeting some parameters such as having atleast one integer, special characters, minimum length etc..
+ 2. Make some form of documentation so that it follows the systems engineering model, this means to add documents such as requirements,specifications..
+ 3. Options to store multiple users, service and password pairs using arrays, database etc.
+ 4. Having a user interface to interact with the code and store and retrieve passwords.
+ 5. Having the option to define administrators, users etc with various privileges for storing and retrieving the passwords
+ 6. Option to define pairs of passphrases (more than two people storing different passphrase for the same data and make the password be retrievable only with all the persons entering their passphrase) This can work like a merkle tree and a single merle root hash can be used in the code and finally just one hash to store the password or some data or key for later retrievel and use. This can become a fork where the merkle root of passphrases or keys is stored as hash and used for authentication by two or more persons rater than retrieving the password. In that case the functions may be completely modified.
+ 7. Using the concept of block chain to store the data in such a way that the data of individuals is stored using the hashing power of the network
+ 8. Encrypting the database file itself.
+ 9. Make the path for database file to be stored as per users choice.
+Future Functions:
+ 1. Make the database scattered in a network such that the hashes are split and  stored in more than one system or node and hence 
+ 2. Make a gui for the tasks.
+ 3. 
+Forks:
+ 1. Make a program which can be utilised by more than one person for collective authentication. The passphrase/password for every user is hashed and then a merkle root is found and stored in the server.
+ 2. Use the program to store only first few characters of the merkle root of the hashes which the user can write or store  and use the program to check offline if some password is correct or not. 
+ 3. As an option of above, the program can be used without storing anything to generate 5 to 10 hex characters which can be written on paper by the user and then use the same program to check if an entered password is correct or not when the user provides the same hex characters and the password. In this case, there is no requirement to store any data and the program can be used as a standalone file.
