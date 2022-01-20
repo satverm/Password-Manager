@@ -1,4 +1,5 @@
 # Password-Manager ( User provided database file name)
+# This repository is created using the pw-login branch of the Secure-Pass repo.
 The project is for learning and is under development.
 This will include codes related with storing usernames and passwords in a secure way.
 The password is hashed by using a passphrase which the user has to remember and user can use the same passphrase to retrieve the password.
