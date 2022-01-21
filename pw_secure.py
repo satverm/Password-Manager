@@ -20,8 +20,6 @@ lim_min, lim_max = 1000,2000   # The difference between ran_min and ran_max can 
 fake_hash_limit = 10    # Adds random (1-10)number of fake hashes in the database.
 #print("The program is used to store and retrieve passwords securely\n")
 
-# First, let's define functions for various tasks
-
 # secure_pw: will conver the password into random hashes list based on the passphrase provided by the user.
 def secure_pw(user_name= None, service= None, passwd= None, pass_phrase= None, ran_min= None, ran_max= None):
     if user_name == None:
@@ -105,7 +103,7 @@ def ret_pw(dbfile= None,sel_id = None, pass_phrase= None, ran_min= None, ran_max
                     chk_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
                     if item[1:-1] == chk_hsh:
                         pword += chr(i)
-                        print("character{} is {}".format(n_count,chr(i)))
+                        #print("character{} is {}".format(n_count,chr(i)))
                         tmp_chk = True
                         break
                 if tmp_chk == True:
@@ -275,11 +273,58 @@ def db_file_chk(db_file= None):
         # todo: code to tell user exit and to copy datafile in the program folder or enter the correct file name
         return(False)
 
+# The login test should be done after the user has entered a filename and the file is present and also having some data. The login test function will test if the password stored for the admin user(userID=1) is matching using the passphrase and the password provided by the user and allow login if result is True
+def logintest(db_file = None, pass_phr = None, pwd= None):
+    if db_file == None:
+        db_file = input("Enter the database file name(filename.db): ")
+        test_file = db_file_chk(db_file)
+    if test_file != False:
+        while True:
+            if pass_phr == None:
+                pass_phr = input("Enter the passphrase to login as admin: ")
+                pass_phr_c = input("Enter the passphrase again to confirm: ")
+                if pass_phr == pass_phr_c:
+                    break
+                else:
+                    print("The passphrase entered by you don't match!! Try again..")
+        while True:
+            if pwd == None:
+                pwd = input("Enter the admin password: ")
+                pwd_c = input("Enter the password again to confirm: ")
+                if pwd == pwd_c:
+                    break
+                else:
+                    print("The passwords entered by you don't match!! try again..")
+        # Now to login the admin we will first find the admin password using the ret_pw() function and entered hash
+        # Then this password would be compared with password entered by the user and if they match then the user can login to UI.
+        #compare the stored password with user provided admin password:
+        pw_stored = ret_pw(db_file,'1',pass_phr)
+        print(pw_stored)
+        if pw_stored == pwd:
+            login_test = True
+            print("You are logged in as admin!!")
+        else:
+            login_test = False
+            print("The login details are not correct!!")
+        return([login_test, db_file])
+    else:
+        print("The file name entered by you is not present!!")
+        return([test_file,test_file])
+
 # pw_ui: The user interface for all tasks of the program.
 def pw_ui():
+    #todo: prompt user if he is new or wants to create a new file.
+    #todo: test for the fileanme to have .db extension
     print("\n***The program is used for storing and retrieving your password***")
-    file_nam= str(input("Enter the database file name (filename.db):"))
-    dbfile = db_file_chk(file_nam)
+    print("Note: the database flie should be in the program directory!!")
+    login_chk = logintest()
+    if login_chk[0] == True:
+        dbfile = login_chk[1]
+    else:
+        print("The filename entered by you is not present in the program direcotory")
+        dbfile = False
+    #file_nam= str(input("Enter the database file name (filename.db):"))
+    #dbfile = db_file_chk(file_nam)
     nofile = False
     if dbfile == False:
         nofile = True

@@ -7,6 +7,7 @@
 * TODO Create a user for the program. The ID and password in the first row in the database  can be used to login a user for managing the database. This will be used in UI to  create a login manager. This will become the opening dialog box for gui.
 * TODO convert the code to use the main() function to run
 * TODO Add the option to hash any password and get the hash code to store first few characters of the hash. These characters can then be used later to verify the passwords offline without the need to login in the actual servie or to check if any password is matching with the hashes. This option does not store anything in the database and the user has to write or store first few hash characters somewhere for verifying later.
+* TODO Add a gui using tkinter.
  
 Basic Functions:
 
