@@ -17,8 +17,8 @@ def userlogin(userid = None, pwd= None):
             else:
                 print("The passwords entered by you don't match!! try again..")
     return([userid,pwd])
-
-def adminlogin(pwd = None, passphraase= None):
+# The login test should be done after the user has entered a filename and the file is present and also having some data. The login test function will test if the password stored for the admin user(userID=1) is matching using the passphrase and the password provided by the user and allow login if result is True
+def logintest(pwd = None, passphraase= None):
     while True:
         pass_phr = input("Enter the passphrase to login as admin: ")
         pass_phr_c = input("Enter the passphrase again to confirm: ")
