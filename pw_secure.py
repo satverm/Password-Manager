@@ -276,7 +276,7 @@ def db_file_chk(db_file= None):
 # The login test should be done after the user has entered a filename and the file is present and also having some data. The login test function will test if the password stored for the admin user(userID=1) is matching using the passphrase and the password provided by the user and allow login if result is True
 def logintest(db_file = None, pass_phr = None, pwd= None):
     if db_file == None:
-        db_file = input("Enter the database file name(filename.db): ")
+        db_file = input("Enter the database file name(anyfilename.db): ")
         test_file = db_file_chk(db_file)
     if test_file != False:
         while True:
@@ -299,7 +299,6 @@ def logintest(db_file = None, pass_phr = None, pwd= None):
         # Then this password would be compared with password entered by the user and if they match then the user can login to UI.
         #compare the stored password with user provided admin password:
         pw_stored = ret_pw(db_file,'1',pass_phr)
-        print(pw_stored)
         if pw_stored == pwd:
             login_test = True
             print("You are logged in as admin!!")
@@ -321,7 +320,7 @@ def pw_ui():
     if login_chk[0] == True:
         dbfile = login_chk[1]
     else:
-        print("The filename entered by you is not present in the program direcotory")
+        #print("The filename entered by you is not present in the program direcotory")
         dbfile = False
     #file_nam= str(input("Enter the database file name (filename.db):"))
     #dbfile = db_file_chk(file_nam)
@@ -360,8 +359,6 @@ def pw_ui():
                 print("There are no records in the database at present!!")
             else:
                 print_records(None,dbfile)
-                # for item in rec_list:
-                #     print("ID={}    | UserName={}      | Service= {}".format(item[0],item[1],item[2]))
         elif sel_task == '0':
             print("The program completed!!")
             break
