@@ -20,8 +20,6 @@ lim_min, lim_max = 1000,2000   # The difference between ran_min and ran_max can 
 fake_hash_limit = 10    # Adds random (1-10)number of fake hashes in the database.
 #print("The program is used to store and retrieve passwords securely\n")
 
-# First, let's define functions for various tasks
-
 # secure_pw: will conver the password into random hashes list based on the passphrase provided by the user.
 def secure_pw(user_name= None, service= None, passwd= None, pass_phrase= None, ran_min= None, ran_max= None):
     if user_name == None:
@@ -315,13 +313,16 @@ def logintest(db_file = None, pass_phr = None, pwd= None):
 
 # pw_ui: The user interface for all tasks of the program.
 def pw_ui():
+    #todo: prompt user if he is new or wants to create a new file.
+    #todo: test for the fileanme to have .db extension
+    print("\n***The program is used for storing and retrieving your password***")
+    print("Note: the database flie should be in the program directory!!")
     login_chk = logintest()
     if login_chk[0] == True:
         dbfile = login_chk[1]
     else:
         print("The filename entered by you is not present in the program direcotory")
         dbfile = False
-    print("\n***The program is used for storing and retrieving your password***")
     #file_nam= str(input("Enter the database file name (filename.db):"))
     #dbfile = db_file_chk(file_nam)
     nofile = False
