@@ -235,7 +235,11 @@ def db_create(db_file = None):
             print("The entered file already exists!!\nChose a different name.")
             db_file = None
         else:
-            break    
+            if db_file[-3:] != '.db':
+                print("The filename extension should be .db !!, try again!!")
+                db_file = None
+            else:
+                break
     con = sq.connect(db_file)
     cur = con.cursor()
     cur.execute('''CREATE TABLE IF NOT EXISTS pwTAB(userID integer primary key autoincrement not null, UserName text, Service text, pwHash text)''')
