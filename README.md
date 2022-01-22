@@ -1,5 +1,4 @@
 # Password-Manager for storing and retrieving passwords.
-# 
 The project is for learning and is under development.
 This will include codes related with storing usernames and passwords in a secure way.
 # Concept:
