@@ -1,8 +1,8 @@
 # This program is used to store and retrieve the password in a secured way by using a pass-phrase.
 # The logic is to hash the pass-phrase and then generate the hashes for each character of the password using the pass-phrase hash.
 # Various methods would be uesd to ensure that the stored hashes are all unique even if the password and the passphrase for any two userid/service are same.
-# Random values are used not for security but to make the hashes look random and make if difficult to find the number of characters in hte password.
-# To retrieve the password, the pass-phrase is entered by the user and the characters of the password are recovered back by gemerating the 
+# Random values are used not for security but to make the hashes look random and make if difficult to find the number of characters in the password.
+# To retrieve the password, the pass-phrase is entered by the user and the characters of the password are recovered back by generating the 
 # hashes and comparing with the stored hashes.
 # Sqlite3 database can be used to store the data in a file for persistance and use by other functions. 
 
