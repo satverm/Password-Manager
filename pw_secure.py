@@ -20,7 +20,7 @@ lim_min, lim_max = 1000,2000   # The difference between ran_min and ran_max can 
 fake_hash_limit = 10    # Adds random (1-10)number of fake hashes in the database.
 #print("The program is used to store and retrieve passwords securely\n")
 
-# secure_pw: will conver the password into random hashes list based on the passphrase provided by the user.
+# secure_pw: will convert the password into random hashes list based on the passphrase provided by the user.
 def secure_pw(user_name= None, service= None, passwd= None, pass_phrase= None, ran_min= None, ran_max= None):
     if user_name == None:
         user_name= input("Enter the username: ")
