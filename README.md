@@ -2,8 +2,16 @@
 # This repository is created using the pw-login branch of the Secure-Pass repo.
 The project is for learning and is under development.
 This will include codes related with storing usernames and passwords in a secure way.
-The password is hashed by using a passphrase which the user has to remember and user can use the same passphrase to retrieve the password.
-The secured password is stored in a sqlite3 database file in the same forlder where the program is present.
+# Concept:
+This program is used to store and retrieve the password in a secured way by using a pass-phrase.
+The logic is to hash the pass-phrase and then generate the hashes for each character of the password using the pass-phrase hash.
+Various methods would be uesd to ensure that the stored hashes are all unique even if the password and the passphrase for any two userid/service are same.
+Random values are used not for security but to make the hashes look random and make if difficult to find the number of characters in the password.
+To retrieve the password, the pass-phrase is entered by the user and the characters of the password are recovered back by generating the 
+hashes and comparing with the stored hashes.
+Sqlite3 database is used to store the data in a file for persistence and use by other functions. 
+
+
 # Features:
  1. User can store passwords along with the username and the name of the website or service for which the password is required.
  2. The stored password can be updated or deleted from the database after it is stored.
