@@ -21,9 +21,9 @@ fake_hash_limit = 10    # Adds random (1-10)number of fake hashes in the databas
 #print("The program is used to store and retrieve passwords securely\n")
 
 # secure_pw: will convert the password into random hashes list based on the passphrase provided by the user.
-def secure_pw(user_name= None, service= None, passwd= None, pass_phrase= None, ran_min= None, ran_max= None):
+def secure_pw(user_name = None, service = None, passwd = None, pass_phrase = None, ran_min = None, ran_max = None):
     if user_name == None:
-        user_name= input("Enter the username: ")
+        user_name = input("Enter the username: ")
     if service == None:
         service = input("Enter the service name: ")
     if passwd == None:
@@ -63,7 +63,7 @@ def secure_pw(user_name= None, service= None, passwd= None, pass_phrase= None, r
         ran_hsh = hs.sha256(temp_str1.encode('utf-8')).hexdigest()
         pw_hsh_lst.append(ran_hsh)
     pw_record = [user_name,service, str(pw_hsh_lst)]
-    #store_record(pw_record)
+    # store_record(pw_record)
     print("The password has been secured and stored in database\n")
     return(pw_record)
 # ret_pw: will retrieve the password using the same passphrase as used to secure and store.
@@ -98,7 +98,7 @@ def ret_pw(dbfile= None,sel_id = None, pass_phrase= None, ran_min= None, ran_max
             n_count +=1
             for i in range(128): 
                 tmp_chk = False
-                for j in range(ran_min,ran_max+1):
+                for j in range(ran_min, ran_max+1):
                     temp_str = str(j) + chr(i) + chr(n_count) + str(ps_phr_hsh)
                     chk_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
                     if item[1:-1] == chk_hsh:
