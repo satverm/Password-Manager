@@ -240,9 +240,6 @@ def db_create(db_file = None):
                 db_file = None
             else:
                 break
-    con = sq.connect(db_file)
-    cur = con.cursor()
-    cur.execute('''CREATE TABLE IF NOT EXISTS pwTAB(userID integer primary key autoincrement not null, UserName text, Service text, pwHash text)''')
     print("The first record in the database will be used for user login.\n")
     user = input("Enter the admin name for managing the passwords: ")
     while True:
@@ -254,16 +251,19 @@ def db_create(db_file = None):
             break
     while True:
         ad_ps_phr = input("Enter the admin passphrase: ")
-        ad_phrc = input("Enter the passphrase again to confirm: ")
         print("### NOTE THE PASSPHRASE IN SOME PAPER AS IT WILL BE USED TO RETRIEVE ANY PASSWORD ###")
+        ad_phrc = input("Enter the passphrase again to confirm: ")
         if ad_ps_phr != ad_phrc:
             print("The passphrase entered by you don't match!! enter again..")
         else:
             break
+    con = sq.connect(db_file)
+    cur = con.cursor()
+    cur.execute('''CREATE TABLE IF NOT EXISTS pwTAB(userID integer primary key autoincrement not null, UserName text, Service text, pwHash text)''')
     store_record(secure_pw(user,'administration',ad_pw,ad_ps_phr),db_file)
-    print("Following admin user has been created, the same would be used for managing the data.")
     con.commit()
     con.close()
+    print("Following admin user has been created, the same would be used for managing the data.")
     print_records(None,db_file)
     print("The database file {} has been created!!".format(db_file))
     return(db_file)
@@ -272,13 +272,13 @@ def db_create(db_file = None):
 def db_file_chk(db_file= None):
     if db_file == None:
         db_file = str(input("Enter the filename to access you data (filename.db): "))
-        print("The file selected by you is:",db_file)
+        #print("The file selected by you is:",db_file)
     try:
         with open(db_file,'r') as fr:
-            print("file is present")
+            #print("file is present")
             return(db_file)
     except IOError:
-        print("The entered file is not present in the program directory!!")
+        #print("The entered file is not present in the program directory!!")
         #print("Ensure the file is present in the program directory")
         # todo: code to tell user exit and to copy datafile in the program folder or enter the correct file name
         return(False)
@@ -286,7 +286,7 @@ def db_file_chk(db_file= None):
 # The login test should be done after the user has entered a filename and the file is present and also having some data. The login test function will test if the password stored for the admin user(userID=1) is matching using the passphrase and the password provided by the user and allow login if result is True
 def logintest(db_file = None, pass_phr = None, pwd= None):
     if db_file == None:
-        db_file = input("Enter the database file name(anyfilename.db): ")
+        db_file = input("Enter the stored database file name(youfilename.db): ")
         test_file = db_file_chk(db_file)
     if test_file != False:
         while True:
@@ -296,6 +296,7 @@ def logintest(db_file = None, pass_phr = None, pwd= None):
                 if pass_phr == pass_phr_c:
                     break
                 else:
+                    pass_phr = None
                     print("\nThe passphrase entered by you don't match!! Try again..")
         while True:
             if pwd == None:
@@ -304,6 +305,7 @@ def logintest(db_file = None, pass_phr = None, pwd= None):
                 if pwd == pwd_c:
                     break
                 else:
+                    pwd = None
                     print("\nThe passwords entered by you don't match!! try again..")
         # Now to login the admin we will first find the admin password using the ret_pw() function and entered hash
         # Then this password would be compared with password entered by the user and if they match then the user can login to UI.
@@ -324,13 +326,18 @@ def logintest(db_file = None, pass_phr = None, pwd= None):
 def pw_ui():
     #todo: prompt user if he is new or wants to create a new file.
     #todo: test for the fileanme to have .db extension
-    print("\n***The program is used for storing and retrieving your password***")
-    print("\n***Login***")
-    login_chk = logintest()
-    if login_chk[0] == True:
-        dbfile = login_chk[1]
+    print("\n*** The program is used for storing and retrieving your password ***")
+    print("\nNew user needs to create a database file and login details!!")
+    test_user = input(("\nPress Y/y if you have already created a database file or Enter to create a new user: "))
+    if test_user.lower() == 'y':
+        print("\n\n*** User Login ***")
+        login_chk = logintest() # test if the database file is present and login details match with data in file.
+        if login_chk[0] == True:
+            dbfile = login_chk[1] # set dbfile to the filename entered by user if login test passes.
+        else:
+            #print("The filename entered by you is not present in the program direcotory")
+            dbfile = False
     else:
-        #print("The filename entered by you is not present in the program direcotory")
         dbfile = False
     #file_nam= str(input("Enter the database file name (filename.db):"))
     #dbfile = db_file_chk(file_nam)
@@ -339,6 +346,7 @@ def pw_ui():
         nofile = True
         new_file_opt = str(input("\nPress Y/y to create a new file or any other key to exit!!: "))
         if new_file_opt.lower() == 'y':
+            print("\n*** New user and database file***")
             dbfile= db_create()
             if db_file_chk(dbfile) == False:
                 nofile = True
@@ -347,7 +355,7 @@ def pw_ui():
         else:
             nofile = True
     if not nofile:
-        task_list = ["0: Exit","1: Store Password","2: Update password","3: Delete Password Record","4: Retrieve Password", "5: View Usernames ID"]
+        task_list = ["0: Exit","1: Store new Password","2: Update password","3: Delete Password Record","4: Retrieve Password", "5: View Usernames ID"]
         print("\nFollowing tasks can be performed:-\n")
         for item in task_list:
             print(item) #print(task_list)
@@ -358,12 +366,12 @@ def pw_ui():
         elif sel_task == '2':
             update_rec(None,dbfile)
         elif sel_task == '3':
-            print("The program will DELETE record from database!!")
+            print("\nThe program will DELETE record from database!!")
             del_rec(None,dbfile)
         elif sel_task == '4':
             ret_pw(dbfile) #todo: avoid double printing of selected record
         elif sel_task == '5':
-            print("Records stored in the database : ")
+            print("\nRecords stored in the database : ")
             rec_list= get_all_records(None,dbfile)
             if rec_list == []:
                 print("There are no records in the database at present!!")
@@ -374,7 +382,7 @@ def pw_ui():
             break
         else:
             print("No valid input recieved !!")
-        task_opt = input("Press Y or y to get the task list again or any other key to Exit : ")
+        task_opt = input("\nPress Y or y to get the task list again or any other key to Exit : ")
         if task_opt.lower() == 'y':
             for item in task_list:
                 print(item)
