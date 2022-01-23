@@ -26,8 +26,6 @@ fake_hash_limit = 10
 #print("The program is used to store and retrieve passwords securely\n")
 
 # secure_pw: will convert the password into random hashes list based on the passphrase provided by the user.
-
-
 def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_min=None, ran_max=None):
 
     if user_name == None:
@@ -90,9 +88,8 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
 
     return(pw_record)
 
+
 # ret_pw: will retrieve the password using the same passphrase as used to secure and store.
-
-
 def ret_pw(dbfile=None, sel_id=None, pass_phrase=None, ran_min=None, ran_max=None):
     print("The program will  retrieve the password by using the passphrase\n")
 
@@ -110,7 +107,7 @@ def ret_pw(dbfile=None, sel_id=None, pass_phrase=None, ran_min=None, ran_max=Non
                 print("ID={}    | UserName={}      | Service= {}".format(
                     item[0], item[1], item[2]))
 
-        sel_id = input("Enter the id  to retrieve the password: ")
+        sel_id = input("Enter the ID  to retrieve the password: ")
 
     # Now get the record from the database for the selected id and retrieve password using the passphrase
     if get_all_records(sel_id, dbfile) == []:
@@ -164,9 +161,8 @@ def ret_pw(dbfile=None, sel_id=None, pass_phrase=None, ran_min=None, ran_max=Non
 
         return(pword)
 
+
 # Function for storing the secured password in a sqlite3 database file(filename.db) to be provided by the user.
-
-
 def store_record(record=None, dbfile=None):
 
     if dbfile == None:
@@ -184,9 +180,8 @@ def store_record(record=None, dbfile=None):
     con.close()
     print("Password database updated in {}".format(dbfile))
 
+
 # del_rec: function to delete a record from the database file based on the ID of the record.
-
-
 def del_rec(sel_id=None, dbfile=None):
 
     if dbfile == None:
@@ -216,9 +211,8 @@ def del_rec(sel_id=None, dbfile=None):
 
         con.close()
 
+
 # update_rec: used to store a new password for some already stored record.
-
-
 def update_rec(sel_id=None, dbfile=None):
 
     if dbfile == None:
@@ -254,9 +248,8 @@ def update_rec(sel_id=None, dbfile=None):
 
         con.close()
 
+
 # sel_rec: used to select the record and the hashlist in the required format.
-
-
 def sel_rec(sel_id=None, dbfile=None):
     if dbfile == None:
         dbfile = db_file_chk()
@@ -281,9 +274,8 @@ def sel_rec(sel_id=None, dbfile=None):
 
     return(rec_list)
 
+
 # get_all_records: used to get a list of all or one record from the database except the hashlist.
-
-
 def get_all_records(sel_id=None, dbfile=None):
     if dbfile == None:
         dbfile = db_file_chk()
@@ -303,9 +295,8 @@ def get_all_records(sel_id=None, dbfile=None):
 
     return(record)
 
+
 # print_records: print all or one record from database.
-
-
 def print_records(sel_id=None, db_file=None):
     rec_lst = get_all_records(sel_id, db_file)
 
@@ -313,9 +304,8 @@ def print_records(sel_id=None, db_file=None):
         print("ID={}    | UserName={}      | Service= {}".format(
             item[0], item[1], item[2]))
 
+
 # db_create: used to create a new database file when running for first time anytime if the user wants.
-
-
 def db_create(db_file=None):
     while True:
         if db_file == None:
@@ -369,9 +359,8 @@ def db_create(db_file=None):
 
     return(db_file)
 
+
 # db_file_chk: check if the entered file is present and return the filename if present or False if not present in the program dir.
-
-
 def db_file_chk(db_file=None):
     if db_file == None:
         db_file = str(
@@ -390,9 +379,8 @@ def db_file_chk(db_file=None):
 
         return(False)
 
+
 # The login test should be done after the user has entered a filename and the file is present and also having some data. The login test function will test if the password stored for the admin user(userID=1) is matching using the passphrase and the password provided by the user and allow login if result is True
-
-
 def logintest(db_file=None, pass_phr=None, pwd=None):
     if db_file == None:
         db_file = input(
@@ -441,9 +429,8 @@ def logintest(db_file=None, pass_phr=None, pwd=None):
 
         return([test_file, test_file])
 
+
 # pw_ui: The user interface for all tasks of the program.
-
-
 def pw_ui():
     # todo: prompt user if he is new or wants to create a new file.
     # todo: test for the fileanme to have .db extension
@@ -542,14 +529,12 @@ def pw_ui():
 
     print("The program completed!!")
 
+
 # main: The entry point for the program.
-
-
 def main():
     pw_ui()
 
+
 # code string to start main()
-
-
 if __name__ == "__main__":
     main()
