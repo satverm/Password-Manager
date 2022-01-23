@@ -24,6 +24,7 @@ Full terminal/Text based UI completed.
 This branch is now designed to work with any file created by the user and not a default file. Thus now the user can use this program without the need of modifying the database file name in the program.
 Now the user can create as many files for different group of passwords as per his own choice.
 
+# Requirement: Python should be installed.
 ## Smart Secure: Secure the password by making the lim_min and lim_max variable very large and a difference of atleast 10,000 between them (for example 800000 and 810000) and then revert the code to the default value of 1000 and 2000.
 ## To do: Moved to ToDo.org file.
 
