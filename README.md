@@ -1,6 +1,6 @@
-# Password-Manager for storing and retrieving passwords.
-The project is for learning and is under development.
-This will include codes related with storing usernames and passwords in a secure way.
+# Password-Manager for storing and retrieving passwords using a python program. 
+## Note: The project is for learning and is under development. This will include codes related with storing usernames and passwords in a secure way.
+## Status: 
 # Concept:
 This program is used to store and retrieve the password in a secured way by using a pass-phrase.
 The logic is to hash the pass-phrase and then generate the hashes for each character of the password using the pass-phrase hash.
