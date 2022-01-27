@@ -8,6 +8,8 @@
 * TODO convert the code to use the main() function to run
 * TODO Add the option to hash any password and get the hash code to store first few characters of the hash. These characters can then be used later to verify the passwords offline without the need to login in the actual servie or to check if any password is matching with the hashes. This option does not store anything in the database and the user has to write or store first few hash characters somewhere for verifying later.
 * TODO Add a gui using tkinter.
+* TODO Option to add many user password pairs using a array or list either through user input or by reading from a file.
+
  
 Basic Functions:
 
