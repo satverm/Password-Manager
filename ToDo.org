@@ -25,8 +25,9 @@ Basic Functions:
 Future Functions:
  1. Make the database scattered in a network such that the hashes are split and  stored in more than one system or node and hence 
  2. Make a gui for the tasks.
- 3. 
+ 3. What if we could store only few characters of the hashes and not the full hashes of the characters in the password.  The minimum characters required to have the retrieve function return the correct character is the key. Hence there will be a requirement to run the retrieve function to find the min number of characters for each hash.
 Forks:
  1. Make a program which can be utilised by more than one person for collective authentication. The passphrase/password for every user is hashed and then a merkle root is found and stored in the server.
  2. Use the program to store only first few characters of the merkle root of the hashes which the user can write or store  and use the program to check offline if some password is correct or not. 
  3. As an option of above, the program can be used without storing anything to generate 5 to 10 hex characters which can be written on paper by the user and then use the same program to check if an entered password is correct or not when the user provides the same hex characters and the password. In this case, there is no requirement to store any data and the program can be used as a standalone file.
+ 

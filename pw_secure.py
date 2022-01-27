@@ -12,7 +12,6 @@ import sqlite3 as sq
 
 import random as rd
 
-from traceback import print_tb
 
 # dbfile= 'pw_wallet_1_01.db'  # The file name can be changed by the user here only to have different names.
 # The difference between ran_min and ran_max can be made large to increase the time for retrieving the passworod and also
