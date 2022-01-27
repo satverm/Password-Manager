@@ -304,6 +304,20 @@ def print_records(sel_id=None, db_file=None):
             item[0], item[1], item[2]))
 
 
+# Muitiple entries
+def multi_entries(dbfile = None):
+    if dbfile is None:
+        dbfile = db_file_chk()
+    while True:
+        record = secure_pw()
+        store_record(record,dbfile)
+        print("The password has been stored!")
+        sel_next = input("Enter Y/y to add more passwords or Enter to exit: ")
+        if sel_next.lower() != 'y':
+            break
+
+
+
 # db_create: used to create a new database file when running for first time anytime if the user wants.
 def db_create(db_file=None):
     while True:
@@ -477,7 +491,7 @@ def pw_ui():
 
     if not nofile:
         task_list = ["0: Exit", "1: Store new Password", "2: Update password",
-                     "3: Delete Password Record", "4: Retrieve Password", "5: View Usernames ID"]
+                     "3: Delete Password Record", "4: Retrieve Password", "5: View Usernames ID", "6: Multiple Entries"]
         print("\nFollowing tasks can be performed:-\n")
 
         for item in task_list:
@@ -507,6 +521,9 @@ def pw_ui():
                 print("There are no records in the database at present!!")
             else:
                 print_records(None, dbfile)
+        elif sel_task == '6':
+            print("Add multiple entries:")
+            multi_entries(dbfile)
 
         elif sel_task == '0':
             #print("The program completed!!")
