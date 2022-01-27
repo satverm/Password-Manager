@@ -140,7 +140,8 @@ def ret_pw(dbfile=None, sel_id=None, pass_phrase=None, ran_min=None, ran_max=Non
                     temp_str = str(j) + chr(i) + chr(n_count) + str(ps_phr_hsh)
                     chk_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
 
-                    if item[1:-1] == chk_hsh:
+                    if item[1:7] == chk_hsh[0:6]: ##Testing the option of storing only few hashes.
+                    #if item[1:-1] == chk_hsh:
                         pword += chr(i)
                         #print("character{} is {}".format(n_count,chr(i)))
                         tmp_chk = True
