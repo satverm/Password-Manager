@@ -140,7 +140,8 @@ def ret_pw(dbfile=None, sel_id=None, pass_phrase=None, ran_min=None, ran_max=Non
                     temp_str = str(j) + chr(i) + chr(n_count) + str(ps_phr_hsh)
                     chk_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
 
-                    if item[1:-1] == chk_hsh:
+                    if item[1:7] == chk_hsh[0:6]: ##Testing the option of storing only few hashes.
+                    #if item[1:-1] == chk_hsh:
                         pword += chr(i)
                         #print("character{} is {}".format(n_count,chr(i)))
                         tmp_chk = True
@@ -302,6 +303,20 @@ def print_records(sel_id=None, db_file=None):
     for item in rec_lst:
         print("ID={}    | UserName={}      | Service= {}".format(
             item[0], item[1], item[2]))
+
+
+# Muitiple entries
+def multi_entries(dbfile = None):
+    if dbfile is None:
+        dbfile = db_file_chk()
+    while True:
+        record = secure_pw()
+        store_record(record,dbfile)
+        print("The password has been stored!")
+        sel_next = input("Enter Y/y to add more passwords or Enter to exit: ")
+        if sel_next.lower() != 'y':
+            break
+
 
 
 # db_create: used to create a new database file when running for first time anytime if the user wants.
@@ -477,7 +492,7 @@ def pw_ui():
 
     if not nofile:
         task_list = ["0: Exit", "1: Store new Password", "2: Update password",
-                     "3: Delete Password Record", "4: Retrieve Password", "5: View Usernames ID"]
+                     "3: Delete Password Record", "4: Retrieve Password", "5: View Usernames ID", "6: Multiple Entries"]
         print("\nFollowing tasks can be performed:-\n")
 
         for item in task_list:
@@ -507,6 +522,9 @@ def pw_ui():
                 print("There are no records in the database at present!!")
             else:
                 print_records(None, dbfile)
+        elif sel_task == '6':
+            print("Add multiple entries:")
+            multi_entries(dbfile)
 
         elif sel_task == '0':
             #print("The program completed!!")
