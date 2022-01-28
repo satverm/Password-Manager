@@ -15,13 +15,13 @@ import random as rd
 
 # dbfile= 'pw_wallet_1_01.db'  # The file name can be changed by the user here only to have different names.
 # The difference between ran_min and ran_max can be made large to increase the time for retrieving the passworod and also
-lim_min, lim_max = 1000, 2000
+lim_min, lim_max = 1, 10
 # to randomise the hashes so that they are different even for same password and passphrase pairs. The security is provided by the passphrase without which even with
 # the data of hashes there is no way to find the passwords.
 # These limits can also be used as a smart feature to store the passwords using some big value but a small range of say 1000 and use the
 # same during retrieving process. So this can act as additional way of increasing diffuculty for others to retrieve the passwords.
 # Adds random (1-10)number of fake hashes in the database.
-fake_hash_limit = 10
+fake_hash_limit = 1
 #print("The program is used to store and retrieve passwords securely\n")
 
 # secure_pw: will convert the password into random hashes list based on the passphrase provided by the user.
@@ -72,6 +72,20 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
         temp_str = str(ran_num) + char + chr(n_count) + str(ps_phr_hsh)
         pw_ch_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
         pw_hsh_lst.append(pw_ch_hsh)
+
+## testing fo less hashes
+        test_hash_list = []
+        print("The present pw_chr_hash is: ",pw_ch_hsh)
+        print('The list for pw char:{}, ser: {}'.format(char,n_count))
+        for char in range(128):
+            for k in range(ran_min,ran_max):
+                temp_str = str(k) + chr(char) + chr(n_count) + str(ps_phr_hsh)
+                pw_ch_hsh_test = hs.sha256(temp_str.encode('utf-8')).hexdigest()
+                test_hash_list.append(pw_ch_hsh_test)
+        for item in sorted(test_hash_list):
+            print(item)
+
+
 
     # Code to add random hashes, this can be converted into a function and be called as per requirement, this will enable the flexibility in the code
     ran_int = rd.randint(1, fake_hash_limit)
@@ -549,7 +563,8 @@ def pw_ui():
 
 # main: The entry point for the program.
 def main():
-    pw_ui()
+    secure_pw('sat','serv','a','pass')
+    #pw_ui()
 
 
 # code string to start main()
