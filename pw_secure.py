@@ -15,7 +15,7 @@ import random as rd
 
 # dbfile= 'pw_wallet_1_01.db'  # The file name can be changed by the user here only to have different names.
 # The difference between ran_min and ran_max can be made large to increase the time for retrieving the passworod and also
-lim_min, lim_max = 1, 10
+lim_min, lim_max = 1, 1000
 # to randomise the hashes so that they are different even for same password and passphrase pairs. The security is provided by the passphrase without which even with
 # the data of hashes there is no way to find the passwords.
 # These limits can also be used as a smart feature to store the passwords using some big value but a small range of say 1000 and use the
@@ -70,26 +70,27 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
         # Add a random number string in the hash to randomize the hashes
         ran_num = rd.randint(ran_min, ran_max)
 ## temp_str modified for testing
-        temp_str = char + chr(n_count) + str(ps_phr_hsh)
+        temp_str = str(ran_num) + char + chr(n_count) + str(ps_phr_hsh)
         pw_ch_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
-        pw_hsh_lst.append(pw_ch_hsh)
+        #pw_hsh_lst.append(pw_ch_hsh)
         # let's call the function for testng hte minimum len
         result = get_smallest_uniqe_hash(pw_ch_hsh,n_count,ps_phr_hsh)
+        pw_hsh_lst.append(result)
         print(n_count)
         print(result)
-        print("this needs to be modified as per all characters")
+        #print("this needs to be modified as per all characters")
 
 ## testing fo less hashes
-        test_hash_list = []
-        print("The present pw_chr_hash is: ",pw_ch_hsh)
-        print('The list for pw char:{}, ser: {}'.format(char,n_count))
-        for char in range(32,127):
-            for k in range(1):
-                temp_str = chr(char) + chr(n_count) + str(ps_phr_hsh)
-                pw_ch_hsh_test = hs.sha256(temp_str.encode('utf-8')).hexdigest()
-                test_hash_list.append(pw_ch_hsh_test)
-        for item in sorted(test_hash_list):
-            pass
+        #test_hash_list = []
+        #print("The present pw_chr_hash is: ",pw_ch_hsh)
+        #print('The list for pw char:{}, ser: {}'.format(char,n_count))
+        #for char in range(32,127):
+        #    for k in range(ran_min, ran_max):
+         #       temp_str = str(k) + chr(char) + chr(n_count) + str(ps_phr_hsh)
+          #      pw_ch_hsh_test = hs.sha256(temp_str.encode('utf-8')).hexdigest()
+           #     test_hash_list.append(pw_ch_hsh_test)
+        #for item in sorted(test_hash_list):
+         #   pass
             #print(item)
 ## Now we need to write code for choosing the unique hash from the above list.
 ## This can be a separate function which can be called here
@@ -100,14 +101,14 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
     # Code to add random hashes, this can be converted into a function and be called as per requirement, this will enable the flexibility in the code
     ran_int = rd.randint(1, fake_hash_limit)
 
-    for i in range(ran_int):
-        temp_str1 = str(ps_phr_hsh) + str(rd.randint(10000, 100000))
-        ran_hsh = hs.sha256(temp_str1.encode('utf-8')).hexdigest()
-        pw_hsh_lst.append(ran_hsh)
+    #for i in range(ran_int):
+        #temp_str1 = str(ps_phr_hsh) + str(rd.randint(10000, 100000))
+        #ran_hsh = hs.sha256(temp_str1.encode('utf-8')).hexdigest()
+        #pw_hsh_lst.append(ran_hsh)
 
     pw_record = [user_name, service, str(pw_hsh_lst)]
     # store_record(pw_record)
-    print("The password has been secured and stored in database\n")
+    print("The min character hash list is \n", pw_hsh_lst)
 
     return(pw_record)
 
@@ -118,19 +119,21 @@ def get_smallest_uniqe_hash(hash_str= None, n_count= None, ps_phr_hsh = None):
     temp_min_len = 0
     current_min_len = 0
     for i in range(32,127):
-        temp_str = chr(i) + chr(n_count) + str(ps_phr_hsh)
-        pw_ch_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
-        possible_hashes_list.append(pw_ch_hsh)
-        # Now we need to compare the first n characters of the actual hash to other possible hashes and home on to the unique least no of characters.
-        # This means we have to compare with other hashes till no match is found. It will be further clear in the followingcode.
-        for j in range(1,64):
-            if pw_ch_hsh != hash_str: # Don't compare with the actual password hash
+        for k in range(lim_min,lim_max):
 
-                if pw_ch_hsh[0:j] == hash_str[0:j]:
-                    temp_min_len = j
-                    print("pw_ch_hsh:",pw_ch_hsh)
-                if temp_min_len > current_min_len:
-                    current_min_len = temp_min_len
+            temp_str = str(k) + chr(i) + chr(n_count) + str(ps_phr_hsh)
+            pw_ch_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
+            #possible_hashes_list.append(pw_ch_hsh)
+            # Now we need to compare the first n characters of the actual hash to other possible hashes and home on to the unique least no of characters.
+            # This means we have to compare with other hashes till no match is found. It will be further clear in the followingcode.
+            for j in range(1,64):
+                if pw_ch_hsh != hash_str: # Don't compare with the actual password hash
+
+                    if pw_ch_hsh[0:j] == hash_str[0:j]:
+                        temp_min_len = j
+                        #print("pw_ch_hsh:",pw_ch_hsh)
+                    if temp_min_len > current_min_len:
+                        current_min_len = temp_min_len
     min_hash_char = hash_str[0:current_min_len+1]
     return(min_hash_char)
 
