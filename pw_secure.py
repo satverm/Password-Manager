@@ -183,6 +183,8 @@ def ret_pw(dbfile=None, sel_id=None, pass_phrase=None, ran_min=None, ran_max=Non
         for item in pw_hash_list:
             tmp_chk = False
             n_count += 1
+            print(item)
+            print(item[1:-1])
 
             for i in range(128):
                 tmp_chk = False
@@ -191,7 +193,9 @@ def ret_pw(dbfile=None, sel_id=None, pass_phrase=None, ran_min=None, ran_max=Non
                     temp_str = str(j) + chr(i) + chr(n_count) + str(ps_phr_hsh)
                     chk_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
 
-                    if item[1:7] == chk_hsh[0:6]: ##Testing the option of storing only few hashes.
+                    if item[1:-1] == chk_hsh[0:len(item)-3]: ##Testing the option of storing only few hashes.
+                        print(chk_hsh)
+                        print(chk_hsh[0:len(item)-2])
                     #if item[1:-1] == chk_hsh:
                         pword += chr(i)
                         #print("character{} is {}".format(n_count,chr(i)))
@@ -600,8 +604,8 @@ def pw_ui():
 
 # main: The entry point for the program.
 def main():
-    secure_pw('sat','serv','abcdefgh','pass')
-    #pw_ui()
+    #secure_pw('sat','serv','abcdefgh','pass')
+    pw_ui()
 
 
 # code string to start main()
