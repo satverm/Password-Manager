@@ -69,7 +69,8 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
         n_count += 1
         # Add a random number string in the hash to randomize the hashes
         ran_num = rd.randint(ran_min, ran_max)
-        temp_str = str(ran_num) + char + chr(n_count) + str(ps_phr_hsh)
+## temp_str modified for testing
+        temp_str = char + chr(n_count) + str(ps_phr_hsh)
         pw_ch_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
         pw_hsh_lst.append(pw_ch_hsh)
 
@@ -77,13 +78,16 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
         test_hash_list = []
         print("The present pw_chr_hash is: ",pw_ch_hsh)
         print('The list for pw char:{}, ser: {}'.format(char,n_count))
-        for char in range(128):
-            for k in range(ran_min,ran_max):
-                temp_str = str(k) + chr(char) + chr(n_count) + str(ps_phr_hsh)
+        for char in range(32,127):
+            for k in range(1):
+                temp_str = chr(char) + chr(n_count) + str(ps_phr_hsh)
                 pw_ch_hsh_test = hs.sha256(temp_str.encode('utf-8')).hexdigest()
                 test_hash_list.append(pw_ch_hsh_test)
         for item in sorted(test_hash_list):
             print(item)
+## Now we need to write code for choosing the unique hash from the above list.
+## This can be a separate function which can be called here
+## get_smallest_uniqe_hash(hash_list = None) 
 
 
 
