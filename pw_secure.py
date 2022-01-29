@@ -73,6 +73,10 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
         temp_str = char + chr(n_count) + str(ps_phr_hsh)
         pw_ch_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
         pw_hsh_lst.append(pw_ch_hsh)
+        # let's call the function for testng hte minimum len
+        result = get_smallest_uniqe_hash(pw_ch_hsh,n_count,ps_phr_hsh)
+        print(n_count)
+        print(result)
 
 ## testing fo less hashes
         test_hash_list = []
@@ -84,7 +88,8 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
                 pw_ch_hsh_test = hs.sha256(temp_str.encode('utf-8')).hexdigest()
                 test_hash_list.append(pw_ch_hsh_test)
         for item in sorted(test_hash_list):
-            print(item)
+            pass
+            #print(item)
 ## Now we need to write code for choosing the unique hash from the above list.
 ## This can be a separate function which can be called here
 ## get_smallest_uniqe_hash(hash_list = None) 
@@ -124,7 +129,7 @@ def get_smallest_uniqe_hash(hash_str= None, n_count= None, ps_phr_hsh = None):
                     temp_min_len = j
                 if temp_min_len > current_min_len:
                     current_min_len = temp_min_len
-    min_hash_char = hash_str[0:current_min_len]
+    min_hash_char = hash_str[0:current_min_len+1]
     return(min_hash_char)
 
 
@@ -590,7 +595,7 @@ def pw_ui():
 
 # main: The entry point for the program.
 def main():
-    secure_pw('sat','serv','a','pass')
+    secure_pw('sat','serv','absdf@123','pass')
     #pw_ui()
 
 
