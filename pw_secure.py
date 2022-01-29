@@ -106,6 +106,29 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
     return(pw_record)
 
 
+# Function to find least length of hashed characters to be stored from the list of all possible hashes by comparing with the actual hash of the password's character and the passphrase in the secure_pw() function.
+def get_smallest_uniqe_hash(hash_str= None, n_count= None, ps_phr_hsh = None):
+    possible_hashes_list = []
+    temp_min_len = 0
+    current_min_len = 0
+    for i in range(32,127):
+        temp_str = chr(i) + chr(n_count) + str(ps_phr_hsh)
+        pw_ch_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
+        possible_hashes_list.append(pw_ch_hsh)
+        # Now we need to compare the first n characters of the actual hash to other possible hashes and home on to the unique least no of characters.
+        # This means we have to compare with other hashes till no match is found. It will be further clear in the followingcode.
+        for j in range(0,64):
+            if pw_ch_hsh != hash_str: # Don't compare with the actual password hash
+
+                if pw_ch_hsh[0:j] == hash_str[0:j]:
+                    temp_min_len = j
+                if temp_min_len > current_min_len:
+                    current_min_len = temp_min_len
+    min_hash_char = hash_str[0:current_min_len]
+    return(min_hash_char)
+
+
+
 # ret_pw: will retrieve the password using the same passphrase as used to secure and store.
 def ret_pw(dbfile=None, sel_id=None, pass_phrase=None, ran_min=None, ran_max=None):
     print("The program will  retrieve the password by using the passphrase\n")
