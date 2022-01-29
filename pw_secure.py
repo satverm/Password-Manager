@@ -123,11 +123,12 @@ def get_smallest_uniqe_hash(hash_str= None, n_count= None, ps_phr_hsh = None):
         possible_hashes_list.append(pw_ch_hsh)
         # Now we need to compare the first n characters of the actual hash to other possible hashes and home on to the unique least no of characters.
         # This means we have to compare with other hashes till no match is found. It will be further clear in the followingcode.
-        for j in range(0,64):
+        for j in range(1,64):
             if pw_ch_hsh != hash_str: # Don't compare with the actual password hash
 
                 if pw_ch_hsh[0:j] == hash_str[0:j]:
                     temp_min_len = j
+                    print("pw_ch_hsh:",pw_ch_hsh)
                 if temp_min_len > current_min_len:
                     current_min_len = temp_min_len
     min_hash_char = hash_str[0:current_min_len+1]
@@ -596,7 +597,7 @@ def pw_ui():
 
 # main: The entry point for the program.
 def main():
-    secure_pw('sat','serv','absdf@123','pass')
+    secure_pw('sat','serv','abcdefgh','pass')
     #pw_ui()
 
 
