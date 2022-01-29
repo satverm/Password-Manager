@@ -64,7 +64,7 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
     ps_phr_hsh = hs.sha256(pass_phrase.encode('utf-8')).hexdigest()
     pw_hsh_lst = []
     n_count = 0
-
+#test 
     for char in passwd:
         n_count += 1
         # Add a random number string in the hash to randomize the hashes
@@ -77,6 +77,7 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
         result = get_smallest_uniqe_hash(pw_ch_hsh,n_count,ps_phr_hsh)
         print(n_count)
         print(result)
+        print("this needs to be modified as per all characters")
 
 ## testing fo less hashes
         test_hash_list = []
