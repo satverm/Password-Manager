@@ -21,7 +21,7 @@ lim_min, lim_max = 1, 1000
 # These limits can also be used as a smart feature to store the passwords using some big value but a small range of say 1000 and use the
 # same during retrieving process. So this can act as additional way of increasing diffuculty for others to retrieve the passwords.
 # Adds random (1-10)number of fake hashes in the database.
-fake_hash_limit = 1
+fake_hash_limit = 5
 #print("The program is used to store and retrieve passwords securely\n")
 
 # secure_pw: will convert the password into random hashes list based on the passphrase provided by the user.
@@ -103,20 +103,23 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
     k_count = 0
     for i in range(ran_int):
         k_count +=1
-        temp_str1 = str(ps_phr_hsh) + k_count + str(rd.randint(10000, 100000)) # we have taken ps_phr_hsh to make the random hash also unpredictable
+        temp_str1 = str(ps_phr_hsh) + str(k_count) + str(rd.randint(10000, 100000)) # we have taken ps_phr_hsh to make the random hash also unpredictable
         ran_hsh = hs.sha256(temp_str1.encode('utf-8')).hexdigest()
         print(ran_hsh)
-        ran_small_hsh = get_smallest_uniqe_hash(temp_str,k_count,ran_hsh)
-        print(ran_small_hsh)
+        ran_small_hsh = get_smallest_uniqe_hash(ran_hsh,k_count,ps_phr_hsh)
+        print("fake rand small hash: ",ran_small_hsh)
+        # now we will make the unique hash as not part of the list of possible hashes by changing a hash character just after the ran_small_hsh
+
         to_flip_str = ran_hsh[len(ran_small_hsh) : len(ran_small_hsh)+1]
-        print(to_flip_str)
-        for i in range(0,16):
-            for j in range(60,70):
-                if chr(i) != to_flip_str:
-                    to_flip_str = chr(i)
-                    break
+        print("to flip string: ",to_flip_str)
+        while True:
+            temp_flip_str =chr(rd.randint(48,57))
+            if temp_flip_str != to_flip_str:
+                ran_small_hsh += temp_flip_str
+                print("new random small hash: ",ran_small_hsh)
+                break
             
-        pw_hsh_lst.append(ran_hsh[0:len(ran_small_hsh)+2])
+        pw_hsh_lst.append(ran_small_hsh)
 
     pw_record = [user_name, service, str(pw_hsh_lst)]
     # store_record(pw_record)
