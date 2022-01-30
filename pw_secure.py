@@ -111,7 +111,11 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
         to_flip_str = ran_hsh[len(ran_small_hsh) : len(ran_small_hsh)+1]
         print(to_flip_str)
         for i in range(0,16):
-            j in range()
+            for j in range(60,70):
+                if chr(i) != to_flip_str:
+                    to_flip_str = chr(i)
+                    break
+            
         pw_hsh_lst.append(ran_hsh[0:len(ran_small_hsh)+2])
 
     pw_record = [user_name, service, str(pw_hsh_lst)]
