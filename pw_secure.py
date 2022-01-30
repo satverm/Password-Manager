@@ -503,7 +503,7 @@ def logintest(db_file=None, pass_phr=None, pwd=None):
             login_test = True
             print("\n***You are logged in as admin!!***")
         else:
-            login_test = True  # made True to login in any case, it has to be false for proper login check
+            login_test = False # rolled back# made True to login in any case, it has to be false for proper login check
             print("\nThe login details are not correct!!")
 
         return([login_test, db_file])
