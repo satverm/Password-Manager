@@ -183,22 +183,22 @@ def ret_pw(dbfile=None, sel_id=None, pass_phrase=None, ran_min=None, ran_max=Non
         for item in pw_hash_list:
             tmp_chk = False
             n_count += 1
-            print(item)
+            print("item:",item)
             print(item[1:-1])
 
-            for i in range(128):
+            for i in range(32,127):
                 tmp_chk = False
 
                 for j in range(ran_min, ran_max+1):
                     temp_str = str(j) + chr(i) + chr(n_count) + str(ps_phr_hsh)
                     chk_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
 
-                    if item[1:-1] == chk_hsh[0:len(item)-3]: ##Testing the option of storing only few hashes.
-                        print(chk_hsh)
+                    if item[1:-1] == chk_hsh[0:len(item)-2]: ##Testing the option of storing only few hashes.
+                        print("chk_hsh",chk_hsh)
                         print(chk_hsh[0:len(item)-2])
                     #if item[1:-1] == chk_hsh:
                         pword += chr(i)
-                        #print("character{} is {}".format(n_count,chr(i)))
+                        print("character{} is {}".format(n_count,chr(i)))
                         tmp_chk = True
                         break
 
@@ -356,8 +356,8 @@ def print_records(sel_id=None, db_file=None):
     rec_lst = get_all_records(sel_id, db_file)
 
     for item in rec_lst:
-        print("ID={}    | UserName={}      | Service= {}".format(
-            item[0], item[1], item[2]))
+        print("ID={}    | UserName={}      | Service= {}   | Hashes= {}".format(
+            item[0], item[1], item[2], item[3]))
 
 
 # Muitiple entries
@@ -483,12 +483,14 @@ def logintest(db_file=None, pass_phr=None, pwd=None):
         # Then this password would be compared with password entered by the user and if they match then the user can login to UI.
         # compare the stored password with user provided admin password:
         pw_stored = ret_pw(db_file, '1', pass_phr)
+        print("pw_stored: ",pw_stored)
+        print("pwd: ",pwd)
 
         if pw_stored == pwd:
             login_test = True
             print("\n***You are logged in as admin!!***")
         else:
-            login_test = False
+            login_test = True  # made True to login in any case, it has to be false for proper login check
             print("\nThe login details are not correct!!")
 
         return([login_test, db_file])
