@@ -100,11 +100,19 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
 
     # Code to add random hashes, this can be converted into a function and be called as per requirement, this will enable the flexibility in the code
     ran_int = rd.randint(1, fake_hash_limit)
-
-    #for i in range(ran_int):
-        #temp_str1 = str(ps_phr_hsh) + str(rd.randint(10000, 100000))
-        #ran_hsh = hs.sha256(temp_str1.encode('utf-8')).hexdigest()
-        #pw_hsh_lst.append(ran_hsh)
+    k_count = 0
+    for i in range(ran_int):
+        k_count +=1
+        temp_str1 = str(ps_phr_hsh) + k_count + str(rd.randint(10000, 100000)) # we have taken ps_phr_hsh to make the random hash also unpredictable
+        ran_hsh = hs.sha256(temp_str1.encode('utf-8')).hexdigest()
+        print(ran_hsh)
+        ran_small_hsh = get_smallest_uniqe_hash(temp_str,k_count,ran_hsh)
+        print(ran_small_hsh)
+        to_flip_str = ran_hsh[len(ran_small_hsh) : len(ran_small_hsh)+1]
+        print(to_flip_str)
+        for i in range(0,16):
+            j in range()
+        pw_hsh_lst.append(ran_hsh[0:len(ran_small_hsh)+2])
 
     pw_record = [user_name, service, str(pw_hsh_lst)]
     # store_record(pw_record)
@@ -210,6 +218,7 @@ def ret_pw(dbfile=None, sel_id=None, pass_phrase=None, ran_min=None, ran_max=Non
                 break
             else:
 
+                print("\nThe stored password is: '{}' ".format(pword))
                 if tmp_chk == False:
                     print("\nThe stored password is: '{}' ".format(pword))
                     break
