@@ -103,7 +103,7 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
     k_count = 0
     for i in range(ran_int):
         k_count +=1
-        temp_str1 = str(ps_phr_hsh) + str(k_count) + str(rd.randint(10000, 100000)) # we have taken ps_phr_hsh to make the random hash also unpredictable
+        temp_str1 = str(ps_phr_hsh) + str(k_count) + str(rd.randint(ran_min, ran_max)) # we have taken ps_phr_hsh to make the random hash also unpredictable
         ran_hsh = hs.sha256(temp_str1.encode('utf-8')).hexdigest()
         print(ran_hsh)
         ran_small_hsh = get_smallest_uniqe_hash(ran_hsh,k_count,ps_phr_hsh)
