@@ -265,7 +265,8 @@ def del_rec(sel_id=None, dbfile=None):
     else:
         rec_lst = get_all_records(sel_id, dbfile)
 
-    if sel_rec == []:
+    if sel_rec == []:  # todo correct this
+    #if sel_rec(sel_id, dbfile) == []
         print("The selected ID is not present !!")
     else:
         print_records(sel_id, dbfile)
