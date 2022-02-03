@@ -129,12 +129,17 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
 
 
 # Function to find least length of hashed characters to be stored from the list of all possible hashes by comparing with the actual hash of the password's character and the passphrase in the secure_pw() function.
-def get_smallest_uniqe_hash(hash_str= None, n_count= None, ps_phr_hsh = None):
+def get_smallest_uniqe_hash(hash_str= None, n_count= None, ps_phr_hsh = None, ran_min = None, ran_max = None):
     possible_hashes_list = []
     temp_min_len = 0
     current_min_len = 0
+    if ran_min == None:
+        ran_min = lim_min
+
+    if ran_max == None:
+        ran_max = lim_max
     for i in range(32,127):
-        for k in range(lim_min,lim_max):
+        for k in range(ran_min,ran_max):
 
             temp_str = str(k) + chr(i) + chr(n_count) + str(ps_phr_hsh)
             pw_ch_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
@@ -162,8 +167,7 @@ def ret_pw(dbfile=None, sel_id=None, pass_phrase=None, ran_min=None, ran_max=Non
         dbfile = db_file_chk()
 
     if sel_id == None:
-        sel_y = str(
-            input("To see the database ID, UserName and Service name press Y/y:"))
+        sel_y = str(input("To see the database ID, UserName and Service name press Y/y:"))
 
         if sel_y.lower() == 'y':
             rec_lst = get_all_records(None, dbfile)
@@ -265,8 +269,8 @@ def del_rec(sel_id=None, dbfile=None):
     else:
         rec_lst = get_all_records(sel_id, dbfile)
 
-    if sel_rec == []:  # todo correct this
-    #if sel_rec(sel_id, dbfile) == []
+    #if sel_rec == []:  # todo correct this
+    if sel_rec(sel_id, dbfile) == []: #testing this
         print("The selected ID is not present !!")
     else:
         print_records(sel_id, dbfile)
