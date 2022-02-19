@@ -76,8 +76,8 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
         # let's call the function for testng hte minimum len
         result = get_smallest_uniqe_hash(pw_ch_hsh,n_count,ps_phr_hsh)
         pw_hsh_lst.append(result)
-        print(n_count)
-        print(result)
+        #print(n_count)
+        #print(result)
         #print("this needs to be modified as per all characters")
 
 ## testing fo less hashes
