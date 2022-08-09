@@ -104,20 +104,27 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
     for i in range(ran_int):
         k_count +=1
         temp_str1 = str(ps_phr_hsh) + str(k_count) + str(rd.randint(ran_min, ran_max)) # we have taken ps_phr_hsh to make the random hash also unpredictable
+        # Also putting ps_phr_hsh at the first string in tem_str1 also makes it different than the actual hashes, but we need to check if these are not part of actual small hashes during hash generation for random hashes.
         ran_hsh = hs.sha256(temp_str1.encode('utf-8')).hexdigest()
         print(ran_hsh)
         ran_small_hsh = get_smallest_uniqe_hash(ran_hsh,k_count,ps_phr_hsh)
         print("fake rand small hash: ",ran_small_hsh)
         # now we will make the unique hash as not part of the list of possible hashes by changing a hash character just after the ran_small_hsh
 
+        # flipping string may not be required as we have changed the order of strings in the temp_str1
         to_flip_str = ran_hsh[len(ran_small_hsh) : len(ran_small_hsh)+1]
         print("to flip string: ",to_flip_str)
         while True:
             temp_flip_str =chr(rd.randint(48,57))
             if temp_flip_str != to_flip_str:
                 ran_small_hsh += temp_flip_str
-                print("new random small hash: ",ran_small_hsh)
-                break
+                # here we need to ensure that this hash is not in the actual less hash list
+                if ran_small_hsh not in pw_hsh_lst:
+                    print("new random small hash: ",ran_small_hsh)
+                    break
+                else:
+                    print("The random lesshash matches one of the pw hash")
+                    continue
             
         pw_hsh_lst.append(ran_small_hsh)
 
@@ -139,13 +146,13 @@ def get_smallest_uniqe_hash(hash_str= None, n_count= None, ps_phr_hsh = None, ra
     if ran_max == None:
         ran_max = lim_max
     for i in range(32,127):
-        for k in range(ran_min,ran_max):
+        for k in range(ran_min,ran_max+1):
 
             temp_str = str(k) + chr(i) + chr(n_count) + str(ps_phr_hsh)
             pw_ch_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
             #possible_hashes_list.append(pw_ch_hsh)
             # Now we need to compare the first n characters of the actual hash to other possible hashes and home on to the unique least no of characters.
-            # This means we have to compare with other hashes till no match is found. It will be further clear in the followingcode.
+            # This means we have to compare with other hashes till no match is found. It will be further clear in the following code.
             for j in range(1,64):
                 if pw_ch_hsh != hash_str: # Don't compare with the actual password hash
 
