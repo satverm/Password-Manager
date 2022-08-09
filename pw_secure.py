@@ -222,9 +222,9 @@ def ret_pw(dbfile=None, sel_id=None, pass_phrase=None, ran_min=None, ran_max=Non
                     if item[1:-1] == chk_hsh[0:len(item)-2]: ##Testing the option of storing only few hashes.
                         print("chk_hsh",chk_hsh)
                         print(chk_hsh[0:len(item)-2])
-                    #if item[1:-1] == chk_hsh:
+                    #if item[1:-1] == chk_hsh:  use this option if you are not using the lesshashes(few hex digits to store the password characters)
                         pword += chr(i)
-                        print("character{} is {}".format(n_count,chr(i)))
+                        print("character{} is {}".format(n_count,chr(i))) 
                         tmp_chk = True
                         break
 
