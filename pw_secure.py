@@ -161,6 +161,8 @@ def get_smallest_uniqe_hash(hash_str= None, n_count= None, ps_phr_hsh = None, ra
                         #print("pw_ch_hsh:",pw_ch_hsh)
                     if temp_min_len > current_min_len:
                         current_min_len = temp_min_len
+# Test: At this point, we can insert an Else and then break whenever any character from 1 to 64 does not match.
+# as there is no requirement to test balance digits.
     min_hash_char = hash_str[0:current_min_len+1]
     return(min_hash_char)
 
