@@ -70,6 +70,10 @@ def secure_pw(user_name=None, service=None, passwd=None, pass_phrase=None, ran_m
         # Add a random number string in the hash to randomize the hashes
         ran_num = rd.randint(ran_min, ran_max)
 ## temp_str modified for testing
+## todo: make a generate_sequence() for the temp_str where user can be given full control 
+## and option to make his unique sequence. We can even give an option to add a file as a secure key in 
+## temp_str or using the hash of some file etc
+## so this generate_sequence() function can be used at all places in the code
         temp_str = str(ran_num) + char + chr(n_count) + str(ps_phr_hsh)
         pw_ch_hsh = hs.sha256(temp_str.encode('utf-8')).hexdigest()
         #pw_hsh_lst.append(pw_ch_hsh)
